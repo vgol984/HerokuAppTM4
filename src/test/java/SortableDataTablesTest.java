@@ -1,6 +1,5 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.annotations.AfterMethod;
@@ -9,9 +8,8 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.util.HashMap;
-import java.util.List;
 
-public class CheckboxesTest {
+public class SortableDataTablesTest {
     WebDriver driver;
     SoftAssert softAssert;
 
@@ -32,20 +30,19 @@ public class CheckboxesTest {
         driver = new ChromeDriver(options);
     }
 
-    @Test
-    public void test2() {
 
-        driver.get("https://the-internet.herokuapp.com/checkboxes");
-        softAssert.assertFalse(driver.findElement(By.xpath("/html/body/div[2]/div/div/form/input[1]")).isSelected());
-        driver.findElement(By.xpath("/html/body/div[2]/div/div/form/input[1]")).click();
-        softAssert.assertTrue(driver.findElement(By.xpath("/html/body/div[2]/div/div/form/input[1]")).isSelected());
-        softAssert.assertTrue(driver.findElement(By.xpath("/html/body/div[2]/div/div/form/input[2]")).isSelected());
-        driver.findElement(By.xpath("/html/body/div[2]/div/div/form/input[2]")).click();
-        softAssert.assertFalse(driver.findElement(By.xpath("/html/body/div[2]/div/div/form/input[2]")).isSelected());
+    @Test
+    public void test6() {
+        driver.get("https://the-internet.herokuapp.com/tables");
+        softAssert.assertEquals(driver.findElement(By.xpath("/html/body/div[2]/div/div/table[1]/tbody/tr[1]/td[1]")).getText(), "Smith");
+        softAssert.assertEquals(driver.findElement(By.xpath("/html/body/div[2]/div/div/table[1]/tbody/tr[1]/td[2]")).getText(), "John");
+        softAssert.assertEquals(driver.findElement(By.xpath("/html/body/div[2]/div/div/table[1]/tbody/tr[1]/td[3]")).getText(), "jsmith@gmail.com");
+        softAssert.assertEquals(driver.findElement(By.xpath("/html/body/div[2]/div/div/table[1]/tbody/tr[1]/td[4]")).getText(), "$50.00");
+        softAssert.assertEquals(driver.findElement(By.xpath("/html/body/div[2]/div/div/table[1]/tbody/tr[1]/td[5]")).getText(), "http://www.jsmith.com");
         softAssert.assertAll();
     }
 
-   @AfterMethod(alwaysRun = true)
+    @AfterMethod(alwaysRun = true)
     public void tearDown() {
         driver.quit();
     }

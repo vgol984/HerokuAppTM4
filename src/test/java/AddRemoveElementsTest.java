@@ -46,6 +46,7 @@ public class AddRemoveElementsTest {
         driver.findElement(By.xpath("//button[text()='Delete']")).click();
         List<WebElement> elements2 = driver.findElements(By.xpath("//button[text()='Delete']"));
         softAssert.assertEquals(exceptedCount2, elements2.size());
+        softAssert.assertAll();
     }
 
     @AfterMethod(alwaysRun = true)

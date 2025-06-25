@@ -3,6 +3,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.Select;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -11,7 +12,7 @@ import org.testng.asserts.SoftAssert;
 import java.util.HashMap;
 import java.util.List;
 
-public class CheckboxesTest {
+public class DropdownTest {
     WebDriver driver;
     SoftAssert softAssert;
 
@@ -33,19 +34,23 @@ public class CheckboxesTest {
     }
 
     @Test
-    public void test2() {
+    public void test3() {
 
-        driver.get("https://the-internet.herokuapp.com/checkboxes");
-        softAssert.assertFalse(driver.findElement(By.xpath("/html/body/div[2]/div/div/form/input[1]")).isSelected());
-        driver.findElement(By.xpath("/html/body/div[2]/div/div/form/input[1]")).click();
-        softAssert.assertTrue(driver.findElement(By.xpath("/html/body/div[2]/div/div/form/input[1]")).isSelected());
-        softAssert.assertTrue(driver.findElement(By.xpath("/html/body/div[2]/div/div/form/input[2]")).isSelected());
-        driver.findElement(By.xpath("/html/body/div[2]/div/div/form/input[2]")).click();
-        softAssert.assertFalse(driver.findElement(By.xpath("/html/body/div[2]/div/div/form/input[2]")).isSelected());
+        int exceptedCount = 3;
+
+        driver.get("https://the-internet.herokuapp.com/dropdown");
+        driver.findElement(By.id("dropdown"));
+        Select select = new Select(driver.findElement(By.id("dropdown")));
+        List<WebElement> elements = driver.findElements(By.tagName("option"));
+        softAssert.assertEquals(elements.size(), exceptedCount);
+        select.selectByValue("1");
+        softAssert.assertEquals(driver.findElement(By.xpath("/html/body/div[2]/div/div/select/option[2]")).getText(), "Option 1");
+        select.selectByValue("2");
+        softAssert.assertEquals(driver.findElement(By.xpath("/html/body/div[2]/div/div/select/option[3]")).getText(), "Option 2");
         softAssert.assertAll();
     }
 
-   @AfterMethod(alwaysRun = true)
+    @AfterMethod(alwaysRun = true)
     public void tearDown() {
         driver.quit();
     }
