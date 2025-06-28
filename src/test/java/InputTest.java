@@ -1,8 +1,10 @@
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.Select;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -11,7 +13,7 @@ import org.testng.asserts.SoftAssert;
 import java.util.HashMap;
 import java.util.List;
 
-public class AddRemoveElementsTest {
+public class InputTest {
     WebDriver driver;
     SoftAssert softAssert;
 
@@ -33,19 +35,19 @@ public class AddRemoveElementsTest {
     }
 
     @Test
-    public void test1() {
-
-        int exceptedCount1 = 2;
-        int exceptedCount2 = 1;
-
-        driver.get("https://the-internet.herokuapp.com/add_remove_elements/");
-        driver.findElement(By.xpath("//button[text()='Add Element']")).click();
-        driver.findElement(By.xpath("//button[text()='Add Element']")).click();
-        List<WebElement> elements1 = driver.findElements(By.xpath("//button[text()='Delete']"));
-        softAssert.assertEquals(exceptedCount1, elements1.size());
-        driver.findElement(By.xpath("//button[text()='Delete']")).click();
-        List<WebElement> elements2 = driver.findElements(By.xpath("//button[text()='Delete']"));
-        softAssert.assertEquals(exceptedCount2, elements2.size());
+    public void test4() {
+        driver.get("https://the-internet.herokuapp.com/inputs");
+        WebElement input = driver.findElement(By.tagName("input"));
+        input.sendKeys("q");
+        softAssert.assertEquals(input.getAttribute("value"), "");
+        input.sendKeys("@");
+        softAssert.assertEquals(input.getAttribute("value"), "");
+        input.sendKeys("0");
+        softAssert.assertEquals(input.getAttribute("value"), "0");
+        input.sendKeys(Keys.ARROW_DOWN);
+        softAssert.assertEquals(input.getAttribute("value"), "-1");
+        input.sendKeys(Keys.ARROW_UP);
+        softAssert.assertEquals(input.getAttribute("value"), "0");
         softAssert.assertAll();
     }
 

@@ -1,6 +1,5 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.annotations.AfterMethod;
@@ -9,9 +8,8 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.util.HashMap;
-import java.util.List;
 
-public class AddRemoveElementsTest {
+public class NotificationMessageTest {
     WebDriver driver;
     SoftAssert softAssert;
 
@@ -32,20 +30,12 @@ public class AddRemoveElementsTest {
         driver = new ChromeDriver(options);
     }
 
+
     @Test
-    public void test1() {
-
-        int exceptedCount1 = 2;
-        int exceptedCount2 = 1;
-
-        driver.get("https://the-internet.herokuapp.com/add_remove_elements/");
-        driver.findElement(By.xpath("//button[text()='Add Element']")).click();
-        driver.findElement(By.xpath("//button[text()='Add Element']")).click();
-        List<WebElement> elements1 = driver.findElements(By.xpath("//button[text()='Delete']"));
-        softAssert.assertEquals(exceptedCount1, elements1.size());
-        driver.findElement(By.xpath("//button[text()='Delete']")).click();
-        List<WebElement> elements2 = driver.findElements(By.xpath("//button[text()='Delete']"));
-        softAssert.assertEquals(exceptedCount2, elements2.size());
+    public void test6() {
+        driver.get("https://the-internet.herokuapp.com/notification_message_rendered");
+        driver.findElement(By.xpath("/html/body/div[2]/div/div/p/a")).click();
+        softAssert.assertEquals(driver.findElement(By.id("flash")).getText(), "Action unsuccesful, please try again\n" + "×");
         softAssert.assertAll();
     }
 

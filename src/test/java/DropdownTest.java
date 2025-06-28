@@ -3,6 +3,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.Select;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -11,7 +12,7 @@ import org.testng.asserts.SoftAssert;
 import java.util.HashMap;
 import java.util.List;
 
-public class AddRemoveElementsTest {
+public class DropdownTest {
     WebDriver driver;
     SoftAssert softAssert;
 
@@ -33,19 +34,19 @@ public class AddRemoveElementsTest {
     }
 
     @Test
-    public void test1() {
+    public void test3() {
 
-        int exceptedCount1 = 2;
-        int exceptedCount2 = 1;
+        int exceptedCount = 3;
 
-        driver.get("https://the-internet.herokuapp.com/add_remove_elements/");
-        driver.findElement(By.xpath("//button[text()='Add Element']")).click();
-        driver.findElement(By.xpath("//button[text()='Add Element']")).click();
-        List<WebElement> elements1 = driver.findElements(By.xpath("//button[text()='Delete']"));
-        softAssert.assertEquals(exceptedCount1, elements1.size());
-        driver.findElement(By.xpath("//button[text()='Delete']")).click();
-        List<WebElement> elements2 = driver.findElements(By.xpath("//button[text()='Delete']"));
-        softAssert.assertEquals(exceptedCount2, elements2.size());
+        driver.get("https://the-internet.herokuapp.com/dropdown");
+        driver.findElement(By.id("dropdown"));
+        Select select = new Select(driver.findElement(By.id("dropdown")));
+        List<WebElement> elements = driver.findElements(By.tagName("option"));
+        softAssert.assertEquals(elements.size(), exceptedCount);
+        select.selectByValue("1");
+        softAssert.assertEquals(driver.findElement(By.xpath("/html/body/div[2]/div/div/select/option[2]")).getText(), "Option 1");
+        select.selectByValue("2");
+        softAssert.assertEquals(driver.findElement(By.xpath("/html/body/div[2]/div/div/select/option[3]")).getText(), "Option 2");
         softAssert.assertAll();
     }
 

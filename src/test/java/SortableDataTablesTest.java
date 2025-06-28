@@ -1,6 +1,5 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.annotations.AfterMethod;
@@ -9,9 +8,8 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.util.HashMap;
-import java.util.List;
 
-public class AddRemoveElementsTest {
+public class SortableDataTablesTest {
     WebDriver driver;
     SoftAssert softAssert;
 
@@ -32,20 +30,15 @@ public class AddRemoveElementsTest {
         driver = new ChromeDriver(options);
     }
 
+
     @Test
-    public void test1() {
-
-        int exceptedCount1 = 2;
-        int exceptedCount2 = 1;
-
-        driver.get("https://the-internet.herokuapp.com/add_remove_elements/");
-        driver.findElement(By.xpath("//button[text()='Add Element']")).click();
-        driver.findElement(By.xpath("//button[text()='Add Element']")).click();
-        List<WebElement> elements1 = driver.findElements(By.xpath("//button[text()='Delete']"));
-        softAssert.assertEquals(exceptedCount1, elements1.size());
-        driver.findElement(By.xpath("//button[text()='Delete']")).click();
-        List<WebElement> elements2 = driver.findElements(By.xpath("//button[text()='Delete']"));
-        softAssert.assertEquals(exceptedCount2, elements2.size());
+    public void test6() {
+        driver.get("https://the-internet.herokuapp.com/tables");
+        softAssert.assertEquals(driver.findElement(By.xpath("/html/body/div[2]/div/div/table[1]/tbody/tr[1]/td[1]")).getText(), "Smith");
+        softAssert.assertEquals(driver.findElement(By.xpath("/html/body/div[2]/div/div/table[1]/tbody/tr[1]/td[2]")).getText(), "John");
+        softAssert.assertEquals(driver.findElement(By.xpath("/html/body/div[2]/div/div/table[1]/tbody/tr[1]/td[3]")).getText(), "jsmith@gmail.com");
+        softAssert.assertEquals(driver.findElement(By.xpath("/html/body/div[2]/div/div/table[1]/tbody/tr[1]/td[4]")).getText(), "$50.00");
+        softAssert.assertEquals(driver.findElement(By.xpath("/html/body/div[2]/div/div/table[1]/tbody/tr[1]/td[5]")).getText(), "http://www.jsmith.com");
         softAssert.assertAll();
     }
 

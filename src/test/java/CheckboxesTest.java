@@ -11,7 +11,7 @@ import org.testng.asserts.SoftAssert;
 import java.util.HashMap;
 import java.util.List;
 
-public class AddRemoveElementsTest {
+public class CheckboxesTest {
     WebDriver driver;
     SoftAssert softAssert;
 
@@ -33,23 +33,19 @@ public class AddRemoveElementsTest {
     }
 
     @Test
-    public void test1() {
+    public void test2() {
 
-        int exceptedCount1 = 2;
-        int exceptedCount2 = 1;
-
-        driver.get("https://the-internet.herokuapp.com/add_remove_elements/");
-        driver.findElement(By.xpath("//button[text()='Add Element']")).click();
-        driver.findElement(By.xpath("//button[text()='Add Element']")).click();
-        List<WebElement> elements1 = driver.findElements(By.xpath("//button[text()='Delete']"));
-        softAssert.assertEquals(exceptedCount1, elements1.size());
-        driver.findElement(By.xpath("//button[text()='Delete']")).click();
-        List<WebElement> elements2 = driver.findElements(By.xpath("//button[text()='Delete']"));
-        softAssert.assertEquals(exceptedCount2, elements2.size());
+        driver.get("https://the-internet.herokuapp.com/checkboxes");
+        softAssert.assertFalse(driver.findElement(By.xpath("/html/body/div[2]/div/div/form/input[1]")).isSelected());
+        driver.findElement(By.xpath("/html/body/div[2]/div/div/form/input[1]")).click();
+        softAssert.assertTrue(driver.findElement(By.xpath("/html/body/div[2]/div/div/form/input[1]")).isSelected());
+        softAssert.assertTrue(driver.findElement(By.xpath("/html/body/div[2]/div/div/form/input[2]")).isSelected());
+        driver.findElement(By.xpath("/html/body/div[2]/div/div/form/input[2]")).click();
+        softAssert.assertFalse(driver.findElement(By.xpath("/html/body/div[2]/div/div/form/input[2]")).isSelected());
         softAssert.assertAll();
     }
 
-    @AfterMethod(alwaysRun = true)
+   @AfterMethod(alwaysRun = true)
     public void tearDown() {
         driver.quit();
     }

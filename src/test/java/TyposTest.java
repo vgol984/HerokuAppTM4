@@ -1,4 +1,5 @@
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -9,9 +10,8 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.util.HashMap;
-import java.util.List;
 
-public class AddRemoveElementsTest {
+public class TyposTest {
     WebDriver driver;
     SoftAssert softAssert;
 
@@ -32,20 +32,24 @@ public class AddRemoveElementsTest {
         driver = new ChromeDriver(options);
     }
 
+
     @Test
-    public void test1() {
+    public void test5() {
+        driver.get("https://the-internet.herokuapp.com/typos");
+        boolean cycleWithoutBreaks = true;
+        String exceptedText = "Sometimes you'll see a typo, other times you won't.";
 
-        int exceptedCount1 = 2;
-        int exceptedCount2 = 1;
-
-        driver.get("https://the-internet.herokuapp.com/add_remove_elements/");
-        driver.findElement(By.xpath("//button[text()='Add Element']")).click();
-        driver.findElement(By.xpath("//button[text()='Add Element']")).click();
-        List<WebElement> elements1 = driver.findElements(By.xpath("//button[text()='Delete']"));
-        softAssert.assertEquals(exceptedCount1, elements1.size());
-        driver.findElement(By.xpath("//button[text()='Delete']")).click();
-        List<WebElement> elements2 = driver.findElements(By.xpath("//button[text()='Delete']"));
-        softAssert.assertEquals(exceptedCount2, elements2.size());
+        for (int i = 0; i < 10; i++) {
+            String actualText = driver.findElement(By.xpath("/html/body/div[2]/div/div/p[2]")).getText();
+            if (actualText.equals(exceptedText)){
+                driver.navigate().refresh();
+                continue;
+            }else{
+                cycleWithoutBreaks = false;
+                break;
+            }
+        }
+        softAssert.assertTrue(cycleWithoutBreaks);
         softAssert.assertAll();
     }
 
