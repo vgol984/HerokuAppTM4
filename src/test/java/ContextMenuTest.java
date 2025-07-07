@@ -4,12 +4,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.annotations.Test;
 
-import javax.swing.*;
-
-public class ContextMenuTest extends BaseTest{
+public class ContextMenuTest extends BaseTest {
 
     @Test
-    public void rightClickTest(){
+    public void rightClickTest() {
 
         Actions actions = new Actions(driver);
         driver.get("https://the-internet.herokuapp.com/context_menu");
